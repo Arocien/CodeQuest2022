@@ -1,24 +1,12 @@
 Traceback (most recent call last):
-  File "c:\users\phili\anaconda3\lib\site-packages\codequest22\visual\game.py", line 168, in run_visual
-    arcade.run()
-  File "c:\users\phili\anaconda3\lib\site-packages\arcade\window_commands.py", line 276, in run
-    pyglet.app.run()
-  File "c:\users\phili\anaconda3\lib\site-packages\pyglet\app\__init__.py", line 107, in run
-    event_loop.run(interval)
-  File "c:\users\phili\anaconda3\lib\site-packages\pyglet\app\base.py", line 184, in run
-    timeout = self.idle()
-  File "c:\users\phili\anaconda3\lib\site-packages\pyglet\app\base.py", line 245, in idle
-    self.clock.call_scheduled_functions(dt)
-  File "c:\users\phili\anaconda3\lib\site-packages\pyglet\clock.py", line 275, in call_scheduled_functions
-    item.func(now - item.last_ts, *item.args, **item.kwargs)
-  File "c:\users\phili\anaconda3\lib\site-packages\pyglet\app\base.py", line 154, in _redraw_windows
-    window.dispatch_event('on_draw')
-  File "c:\users\phili\anaconda3\lib\site-packages\pyglet\window\__init__.py", line 1327, in dispatch_event
-    super().dispatch_event(*args)
-  File "c:\users\phili\anaconda3\lib\site-packages\pyglet\event.py", line 427, in dispatch_event
-    raise e
-  File "c:\users\phili\anaconda3\lib\site-packages\pyglet\event.py", line 422, in dispatch_event
-    if getattr(self, event_type)(*args):
-  File "c:\users\phili\anaconda3\lib\site-packages\codequest22\visual\screen.py", line 714, in on_draw
-    self.draw_player_ui_main_under(GameStateHandler.hill, GameStateHandler.energy, GameStateHandler.health)
-AttributeError: type object 'GameStateHandler' has no attribute 'hill'
+  File "C:\Users\phili\AppData\Local\Programs\Python\Python310\lib\site-packages\codequest22\client\__init__.py", line 11, in run_client
+    runner.load_bot(bot_path)
+  File "C:\Users\phili\AppData\Local\Programs\Python\Python310\lib\site-packages\codequest22\client\runner.py", line 58, in load_bot
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "C:\Users\phili\OneDrive\Documents\GitHub\CodeQuest22\game_bot\main.py", line 1, in <module>
+    from curses import COLOR_BLUE
+  File "C:\Users\phili\AppData\Local\Programs\Python\Python310\lib\curses\__init__.py", line 13, in <module>
+    from _curses import *
+ModuleNotFoundError: No module named '_curses'

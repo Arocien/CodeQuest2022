@@ -1,3 +1,4 @@
+import random as rand
 from codequest22.server.ant import AntTypes
 import codequest22.stats as stats
 from codequest22.server.events import *
@@ -103,19 +104,53 @@ def handle_events(events):
             if ev.player_index == my_index:
                 # One of my workers just died :(
                 total_ants -= 1
+        elif isinstance(ev,ZoneActiveEvent):
+            if ev.player_index == my_index:
+                requests.append(GoalRequest(ev.ant_id, ))
 
-    # Can I spawn ants?
+    # Handes spawns 
     spawned_this_tick = 0
     while (
-        total_ants < stats.general.MAX_ANTS_PER_PLAYER and 
-        spawned_this_tick < stats.general.MAX_SPAWNS_PER_TICK and
-        my_energy >= stats.ants.Worker.COST
+        total_ants < stats.general.MAX_ANTS_PER_PLAYER and # less ants than max 
+        spawned_this_tick < stats.general.MAX_SPAWNS_PER_TICK and #doesnt override spawn tick rule
+        my_energy >= stats.ants.Worker.COST #energy
     ):
-        spawned_this_tick += 1
-        total_ants += 1
-        # Spawn an ant, give it some id, no color, and send it to the closest site.
-        # I will pay the base cost for this ant, so cost=None.
-        requests.append(SpawnRequest(AntTypes.WORKER, id=None, color=None, goal=closest_site))
-        my_energy -= stats.ants.Worker.COST
+        rand_num = rand.randint(0,3)
+        #stuff other food lines 
+        if my_energy >= 400:
+            spawned_this_tick += 1
+            total_ants += 1
+            requests.append(SpawnRequest(AntTypes.FIGHTER, id=None, color=None, goal=food[rand_num]))
+            my_energy -= stats.ants.Fighter.COST
+        
+        elif my_energy >= 500:
+            rand_num = rand.randint(0,3)
+            spawned_this_tick += 1
+            total_ants += 1
+            requests.append(SpawnRequest(AntTypes.FIGHTER, id=None, color=None, goal=spawns[rand_num]))
+            my_energy -= stats.ants.Fighter.COST
+
+        #branching out new food sources
+        elif my_energy >= 100:
+            spawned_this_tick += 1
+            total_ants += 1
+            requests.append(SpawnRequest(AntTypes.WORKER, id=None, color=None, goal=spawns[rand_num]))
+            my_energy -= stats.ants.Worker.COST
+
+        #default get food at closest place 
+        else:
+            spawned_this_tick += 1
+            total_ants += 1
+            requests.append(SpawnRequest(AntTypes.WORKER, id=None, color=None, goal=closest_site))
+            my_energy -= stats.ants.Worker.COST
+
+
 
     return requests
+
+
+
+
+
+
+
