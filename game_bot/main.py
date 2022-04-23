@@ -18,6 +18,7 @@ food = []
 distance = {}
 closest_site = None
 total_ants = 0
+# yayayayaya
 
 def read_map(md, energy_info):
     global map_data, spawns, food, distance, closest_site
