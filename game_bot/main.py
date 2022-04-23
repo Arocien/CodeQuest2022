@@ -11,6 +11,7 @@ def read_index(player_index, n_players):
     global my_index
     my_index = player_index
 
+#sup sup
 my_energy = stats.general.STARTING_ENERGY
 map_data = {}
 spawns = [None]*4
