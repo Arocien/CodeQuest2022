@@ -105,6 +105,9 @@ def handle_events(events):
             if ev.player_index == my_index:
                 # One of my workers just died :(
                 total_ants -= 1
+        elif isinstance(ev,QueenAttackEvent):
+            if ev.player_index == my_index:
+                requests.append(GoalRequest(ev.ant_id, spawns[my_index]))
         # elif isinstance(ev,ZoneActiveEvent):
         #     if ev.player_index == my_index:
         #         requests.append(GoalRequest(ev.ant_id, ZoneActiveEvent))
@@ -119,14 +122,18 @@ def handle_events(events):
         rand_num = rand.randint(0,3)
         food_sites = list(sorted(food, key=lambda prod: distance[prod]))
         #branch out 
-        if my_energy >= 101 and my_energy < 400:
+        if my_energy >= 101 and my_energy < 300:
             spawned_this_tick += 1
             total_ants += 1
             requests.append(SpawnRequest(AntTypes.WORKER, id=None, color=None, goal=food_sites[rand_num]))
             my_energy -= stats.ants.Worker.COST
 
         # elif my_energy >= 200:
-        # # elif my_energy >= 300:
+        elif my_energy >= 300 and my_energy < 400:
+            spawned_this_tick += 1
+            total_ants += 1
+            requests.append(SpawnRequest(AntTypes.FIGHTER, id=None, color=None, goal=None))
+            my_energy -= stats.ants.Fighter.COST 
 
         #Disrupt enemy lines
         elif my_energy >= 400 and my_energy < 500:
@@ -143,7 +150,7 @@ def handle_events(events):
             requests.append(SpawnRequest(AntTypes.FIGHTER, id=None, color=None, goal=spawns[rand_num]))
             my_energy -= stats.ants.Fighter.COST
 
-        # # elif my_energy >= 600:
+        # # elif my_energy >= 600: 
 
 
         # # elif my_energy >= 700:
